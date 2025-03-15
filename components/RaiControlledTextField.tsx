@@ -14,7 +14,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 
-export default function ShControlledTextField<U extends FieldValues>({
+export default function RaiControlledTextField<U extends FieldValues>({
     label,
     control,
     registerName,
