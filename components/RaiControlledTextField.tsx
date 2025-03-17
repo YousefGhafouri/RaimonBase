@@ -9,20 +9,26 @@ import {
 } from 'react-hook-form';
 import ConditionalRender from './ConditionalRendering';
 import { InputAdornment } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 
 export default function RaiControlledTextField<U extends FieldValues>({
+    items,
     label,
     control,
     registerName,
     size = 'small',
     type = 'text',
+    SelectProps,
     rules,
     ...rest
 }: {
+    items?: { value: any; title?: string | null }[];.
     label: string;
     control: Control<U, any>;
     registerName: Path<U>;
@@ -32,9 +38,14 @@ export default function RaiControlledTextField<U extends FieldValues>({
               'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
           >
         | undefined;
-    type?: 'money' | 'text' | 'password' | 'number';
+    type?: 'money' | 'text' | 'password' | 'number' | 'select';
 } & Omit<TextFieldProps, 'value' | 'onChange' | 'defaultValue' | 'type'>) {
     const [visible, setVisible] = useState(false);
+    const options = items?.map(({ value, title }) => (
+      <MenuItem key={value} value={value}>
+          {title}
+      </MenuItem>
+  ));
     return (
         <Controller
             control={control}
@@ -46,18 +57,43 @@ export default function RaiControlledTextField<U extends FieldValues>({
                     render={
                         <TextField
                             type={
+                              type === 'select'?undefined:
                                 type !== 'password'
                                     ? type
                                     : visible
                                       ? 'text'
                                       : 'password'
                             }
+                            select={type === 'select'}
                             size={size}
                             fullWidth
                             error={!!fieldState.error?.message}
                             helperText={fieldState.error?.message}
                             label={label}
                             InputLabelProps={{ shrink: field.value }}
+                            SelectProps={{
+                                ...SelectProps,
+                                value: field.value,
+                                onChange: field.onChange,
+                                renderValue:(selected) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {console.log(selected)}
+                                    {SelectProps?.multiple
+                                        ? selected?.map((value) => (
+                                              <Chip
+                                                  key={value}
+                                                  label={
+                                                      items?.find(
+                                                          (item) => item?.value === value
+                                                      )?.title || value
+                                                  }
+                                              />
+                                          ))
+                                        : items?.find((item) => item?.value === selected)
+                                              ?.title || selected}
+                                </Box>
+                            )
+                            }}
                             InputProps={{
                                 endAdornment:
                                     type === 'password' ? (
@@ -81,7 +117,9 @@ export default function RaiControlledTextField<U extends FieldValues>({
                             }}
                             {...field}
                             {...rest}
-                        />
+                        >
+                          {options}
+                        </TextField>
                     }
                 >
                     <NumericFormat
