@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { JSX, useCallback, useState } from 'react';
 import Cropper, { CropperProps } from 'react-easy-crop';
 import { Slider, Typography } from '@mui/material';
 import { getCroppedImg } from './canvasUtils';
@@ -8,7 +8,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import CheckIcon from '@mui/icons-material/Check';
 import { toast } from 'react-toastify';
 import { $compress } from '@helpers/compressImage';
-import ConditionalRender from 'Raimon_Base/components/ConditionalRendering';
+import ConditionalRender from '@Raimon_Base/components/ConditionalRendering';
 
 export interface CropperResult {
     imageFile: File;
@@ -16,7 +16,7 @@ export interface CropperResult {
     blob: Blob;
 }
 
-interface Props {
+export interface CropperPropsModal {
     closeModal: (inp?: CropperResult) => void;
     aspect?: { x: number; y: number };
     CropperProps?: Partial<CropperProps>;
@@ -36,7 +36,7 @@ const CropImageModal = ({
     children,
     isFullScreen = false,
     closeModal,
-}: Props) => {
+}: CropperPropsModal) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [rotation, setRotation] = useState(0);
     const [zoom, setZoom] = useState(1);

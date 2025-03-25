@@ -1,0 +1,18 @@
+{
+  "name": "raimon_base",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@mui/icons-material": "^6.4.8",
+    "react-number-format": "^5.4.3",
+    "@mui/material": "^6.4.6",
+    "react-hook-form": "^7.54.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
