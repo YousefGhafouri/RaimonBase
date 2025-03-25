@@ -28,7 +28,7 @@ export default function RaiControlledTextField<U extends FieldValues>({
     rules,
     ...rest
 }: {
-    items?: { value: any; title?: string | null }[];.
+    items?: { value: any; title?: string | null }[];
     label: string;
     control: Control<U, any>;
     registerName: Path<U>;

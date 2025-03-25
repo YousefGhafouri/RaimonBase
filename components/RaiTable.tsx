@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { basicNullHandler } from '../../helpers/table';
 
-export default function ShTable<
+export default function RaiTable<
     T extends Record<string | number | symbol, unknown>,
 >({
     header,

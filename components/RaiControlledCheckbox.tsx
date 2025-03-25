@@ -7,7 +7,7 @@ import {
 } from 'react-hook-form';
 import { Checkbox, CheckboxProps, FormControlLabel } from '@mui/material';
 
-export default function ShControlledCheckbox<U extends FieldValues>({
+export default function RaiControlledCheckbox<U extends FieldValues>({
     label,
     control,
     registerName,
