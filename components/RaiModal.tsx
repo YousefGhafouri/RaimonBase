@@ -19,6 +19,7 @@ function ShModal() {
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
+                    onClose={closeModal}
                     open
                     {...props}
                 >
@@ -26,7 +27,7 @@ function ShModal() {
                         <Paper
                             sx={{
                                 padding: 1,
-                                overflowY: 'scroll',
+                                overflowY: 'auto',
                                 position: 'relative',
                                 width: '800px',
                                 maxHeight: '70vh',
@@ -36,7 +37,6 @@ function ShModal() {
                             <Button
                                 sx={{
                                     padding: 1,
-                                    overflowY: 'scroll',
                                     position: 'absolute',
                                     right: 0,
                                     top: 5,
