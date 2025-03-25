@@ -14,9 +14,9 @@ interface ModalStateI<T extends object> extends IModal<T> {
   id:number
 }
 type openModal = {
-  openModal: <T extends object>(inp: ModalStateI<T>) => void;
+  openModal: <T extends object>(inp: IModal<T>) => void;
   openAsyncModal: <T extends object>(
-    inp: ModalStateI<T>
+    inp: IModal<T>
   ) => Promise<unknown>;
 };
 const ModalContext = React.createContext<openModal>(null);
