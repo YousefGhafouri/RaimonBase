@@ -27,7 +27,7 @@ const GroupItems = styled('ul')({
     padding: 0,
 });
 
-export default function ShAutocomplete<
+export default function RaiAutocomplete<
     T extends unknown,
     U extends FieldValues,
 >({

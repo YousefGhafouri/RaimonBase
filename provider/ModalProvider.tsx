@@ -53,7 +53,7 @@ const ModalProvider: React.FC<Props> = ({ children }) => {
         <Modal.ContentComponent
           key={Modal.id}
           closeModal={(data) => {
-            Modal.resolve(data);
+            Modal?.resolve?.(data);
             setModals((prev) => prev.filter((item) => item.id != Modal.id));
           }}
           {...Modal.contentProps}

@@ -38,7 +38,7 @@ export default function RaiControlledTextField<U extends FieldValues>({
               'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
           >
         | undefined;
-    type?: 'money' | 'text' | 'password' | 'number' | 'select';
+    type?: 'money' | 'mobile' | 'text' | 'password' | 'number' | 'select' | 'email';
 } & Omit<TextFieldProps, 'value' | 'onChange' | 'defaultValue' | 'type'>) {
     const [visible, setVisible] = useState(false);
     const options = items?.map(({ value, title }) => (
