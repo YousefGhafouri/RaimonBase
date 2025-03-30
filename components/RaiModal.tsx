@@ -1,8 +1,8 @@
 import { Button, Fade, Modal, Paper } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import useModal from '@Base/hooks/Modal';
+import { useModal } from '@Base/provider/ModalProvider';
 
-function ShModal() {
+function RaiModal() {
     const { modals, closeModal } = useModal((state) => ({
         modals: state.modals,
         closeModal: state.closeModal,
@@ -58,4 +58,4 @@ function ShModal() {
     );
 }
 
-export default ShModal;
+export default RaiModal;

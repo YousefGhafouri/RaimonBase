@@ -1,6 +1,6 @@
 import React, { JSX, useCallback, useState } from 'react';
 import Cropper, { CropperProps } from 'react-easy-crop';
-import { Slider, Typography } from '@mui/material';
+import { Modal, Slider, Typography } from '@mui/material';
 import { getCroppedImg } from './canvasUtils';
 import styles from './styles.module.css';
 import CloseIcon from '@mui/icons-material/Close';
@@ -100,7 +100,7 @@ const CropImageModal = ({
     };
 
     return (
-        <div className="cropper_container_0001">
+        <Modal open onClose={()=>closeModal()}>
             <ConditionalRender
                 condition={imageSrc !== undefined}
                 render={
@@ -185,7 +185,7 @@ const CropImageModal = ({
                     </div>
                 }
             />
-        </div>
+        </Modal>
     );
 };
 
