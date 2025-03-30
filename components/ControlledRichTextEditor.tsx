@@ -1,6 +1,6 @@
 import { Box, TextField, TextFieldProps, Typography } from "@mui/material";
 import { IAllProps } from "@tinymce/tinymce-react";
-import RaiRichTextEditor from "Raimon_Base/components/RaiRichTextEditor";
+import RaiRichTextEditor from "Base/components/RaiRichTextEditor";
 import { Controller } from "react-hook-form";
 
 interface Props extends IAllProps{
