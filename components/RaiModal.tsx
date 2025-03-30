@@ -1,6 +1,6 @@
 import { Button, Fade, Modal, Paper } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import useModal from '../../hooks/Modal';
+import useModal from '@Base/hooks/Modal';
 
 function ShModal() {
     const { modals, closeModal } = useModal((state) => ({

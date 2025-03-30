@@ -1,6 +1,6 @@
 'use client'
 import {Editor, IAllProps} from '@tinymce/tinymce-react';
-import { createUploadHandler, EditorProps } from 'Base/utils/Editor';
+import { createUploadHandler, EditorProps } from '@Base/utils/Editor';
 
 
 const RaiRichTextEditor = ({editor_ref,...props}:IAllProps&{editor_ref:any}) => {
