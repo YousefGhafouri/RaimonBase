@@ -12,7 +12,7 @@ export const intlFormat = new Intl.NumberFormat('irr', {
 })
 
 export function $monyFormatter(amount: number | `${number}`) {
-    const money = intlFormat.format(amount);
+    const money = intlFormat.format(Number(amount));
 
     return `${money} تومان`;
 }
