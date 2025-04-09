@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { basicNullHandler } from '../../helpers/table';
+import { basicNullHandler } from '@Base/helpers/table';
 
 interface IheaderItem<T extends object>{
     label: string;
