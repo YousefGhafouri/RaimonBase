@@ -1,22 +1,23 @@
+import RaiRichTextEditor from "@Base/components/base/RaiRichTextEditor";
 import { Box, TextField, TextFieldProps, Typography } from "@mui/material";
 import { IAllProps } from "@tinymce/tinymce-react";
-import RaiRichTextEditor from "@Base/components/base/RaiRichTextEditor";
-import { Controller } from "react-hook-form";
+import React from "react";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 
-interface Props extends IAllProps{
+interface Props<U extends FieldValues> extends IAllProps{
   editor_ref:React.MutableRefObject<undefined>
-  name: string;
+  control: Control<U, any>;
+  registerName: Path<U>;
   label?: string;
-  control: any;
   slotProps?:{
     textField:TextFieldProps
   }
 }
 
-function ControlledRichTextEditor({editor_ref,name,control,label,slotProps,...props}:Props) {
+function RaiControlledRichTextEditor<U extends FieldValues>({editor_ref,registerName,control,label,slotProps,...props}:Props<U>) {
   return (
     <Controller
-      name={name}
+      name={registerName}
       control={control}
       render={({
         field: { onChange, value },
@@ -25,7 +26,7 @@ function ControlledRichTextEditor({editor_ref,name,control,label,slotProps,...pr
       }) => (
         <Box>
           {label ? (
-            <TextField focused={false} InputLabelProps={{shrink:false}} inputProps={{readOnly: true,}} value='' label={label} helperText={error?.message} error={error} {...slotProps?.textField} />
+            <TextField focused={false} InputLabelProps={{shrink:false}} inputProps={{readOnly: true,}} value='' label={label} helperText={error?.message} error={!!error} {...slotProps?.textField} />
           ) : error ? (
             <Typography sx={{ color: "red", fontSize: "12px", mt: 1 }}>
               {error?.message}
@@ -39,4 +40,4 @@ function ControlledRichTextEditor({editor_ref,name,control,label,slotProps,...pr
   )
 }
 
-export default ControlledRichTextEditor
+export default RaiControlledRichTextEditor

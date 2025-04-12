@@ -1,6 +1,7 @@
+import { IAllProps } from "@tinymce/tinymce-react";
 import axios from "axios";
 
-export const EditorProps = {
+export const EditorProps:IAllProps['init'] = {
   // skin: (window.matchMedia('(prefers-color-scheme: dark)').matches ? {oxide_dark} : {oxide}),
   // content_css:{writer},
   automatic_uploads: false,
