@@ -7,7 +7,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { basicNullHandler } from '../../helpers/table';
+import { basicNullHandler } from '@Base/helpers/table';
+
+interface IheaderItem<T extends object>{
+    label: string;
+    key: keyof T | (string & {});
+    width?: number;
+    cellRenderer?: (data: T, index?: number) => React.ReactNode;
+}
+
+export type Iheader<T extends object> = Array<IheaderItem<T>>
 
 export default function RaiTable<
     T extends Record<string | number | symbol, unknown>,
@@ -17,12 +26,7 @@ export default function RaiTable<
     loading = false,
     children,
 }: {
-    header: {
-        label: string;
-        key: keyof T;
-        width?: number;
-        cellRenderer?: (data: T, index?: number) => React.ReactNode;
-    }[];
+    header: Iheader<T>;
     items: T[];
     loading?: Boolean;
     children?: (data: T) => React.ReactNode;

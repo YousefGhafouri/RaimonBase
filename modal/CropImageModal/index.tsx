@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CheckIcon from '@mui/icons-material/Check';
 import { toast } from 'react-toastify';
-import ConditionalRender from '@Base/components/ConditionalRendering';
+import ConditionalRender from '@Base/components/base/ConditionalRendering';
 import { $compress } from '@Base/helpers/compressImage';
 
 export interface CropperResult {

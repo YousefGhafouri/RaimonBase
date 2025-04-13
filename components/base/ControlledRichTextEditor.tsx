@@ -1,6 +1,6 @@
 import { Box, TextField, TextFieldProps, Typography } from "@mui/material";
 import { IAllProps } from "@tinymce/tinymce-react";
-import RaiRichTextEditor from "@Base/components/RaiRichTextEditor";
+import RaiRichTextEditor from "@Base/components/base/RaiRichTextEditor";
 import { Controller } from "react-hook-form";
 
 interface Props extends IAllProps{
@@ -32,7 +32,7 @@ function ControlledRichTextEditor({editor_ref,name,control,label,slotProps,...pr
             </Typography>
           ) : null}
           <RaiRichTextEditor value={value} 
-            onChange={(_, value) => onChange(value)} editor_ref={editor_ref} {...props} />
+            onEditorChange={(value, editor) => onChange(value)} editor_ref={editor_ref} {...props} />
         </Box>
       )}
     />

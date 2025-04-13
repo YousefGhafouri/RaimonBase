@@ -1,5 +1,14 @@
 import Box from '@mui/material/Box';
-import { Button, Divider, Typography } from '@mui/material';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    Modal,
+    Typography,
+} from '@mui/material';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 
 function ConfirMation({
@@ -7,7 +16,7 @@ function ConfirMation({
     onConfirm,
     content,
 }: {
-    closeModal: () => void;
+    closeModal: (inp?: any) => void;
     onConfirm?: (closeModal: () => void) => Promise<void> | void;
     content?: any;
 }) {
@@ -17,24 +26,31 @@ function ConfirMation({
         }
     };
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 1,
-            }}
-        >
-            <ReportGmailerrorredIcon />
-            <Divider />
-            {content ? content : <Typography>ایا اطمینان دارید ؟</Typography>}
-            <Box
+        <Dialog open onClose={closeModal}>
+            <DialogContent
                 sx={{
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     gap: 1,
                 }}
             >
+                <ReportGmailerrorredIcon fontSize='large' />
+                <Divider />
+                {content ? (
+                    content
+                ) : (
+                    <Typography>ایا اطمینان دارید ؟</Typography>
+                )}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                    }}
+                ></Box>
+            </DialogContent>
+            <DialogActions sx={{direction:'rtl',gap:1}} >
                 <Button
                     variant="contained"
                     color="success"
@@ -49,8 +65,8 @@ function ConfirMation({
                 >
                     خیر
                 </Button>
-            </Box>
-        </Box>
+            </DialogActions>
+        </Dialog>
     );
 }
 

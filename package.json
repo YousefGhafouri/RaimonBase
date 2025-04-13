@@ -7,9 +7,13 @@
   },
   "dependencies": {
     "@mui/icons-material": "^6.4.8",
-    "react-number-format": "^5.4.3",
     "@mui/material": "^6.4.6",
     "@mui/lab": "^6.0.0-beta.31",
+    "react-number-format": "^5.4.3",
+    "@faker-js/faker": "^9.6.0",
+    "yoastseo": "^3.0.0",
+    "zod": "^3.24.2",
+    "zustand": "^4.5.4",
     "react-hook-form": "^7.54.2"
   },
   "keywords": [],
