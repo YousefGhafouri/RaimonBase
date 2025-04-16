@@ -41,7 +41,7 @@ export interface IRaiAutoCompleteProps<T>
     boolean | undefined,
     boolean | undefined,
     ChipTypeMap["defaultComponent"]
-  >["slotProps"] & { asdf?: TextFieldProps };
+  >["slotProps"] & { textField?: TextFieldProps };
 }
 
 export default function RaiAutocomplete<
@@ -52,7 +52,6 @@ export default function RaiAutocomplete<
   itemValue = "value",
   itemLabel = "label",
   size = "small",
-  onChange,
   slotProps: {
     textField: resetTextField,
     ...restOfSlots
