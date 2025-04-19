@@ -85,6 +85,8 @@ export default function RaiControlledAutocomplete<
                     itemLabel={itemLabel}
                     itemValue={itemValue}
                     {...reset}
+                    disableCloseOnSelect={reset.multiple}
+                    filterSelectedOptions
                     disabled={reset.disabled || fieldState.isValidating}
                     onChange={(_e, value, ...args) => {
                       field.onChange(
