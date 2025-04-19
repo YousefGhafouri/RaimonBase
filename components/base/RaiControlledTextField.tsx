@@ -77,7 +77,6 @@ export default function RaiControlledTextField<U extends FieldValues>({
                                 onChange: field.onChange,
                                 renderValue:(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                    {console.log(selected)}
                                     {SelectProps?.multiple
                                         ? selected?.map((value) => (
                                               <Chip
