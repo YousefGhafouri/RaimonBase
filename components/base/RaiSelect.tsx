@@ -36,7 +36,6 @@ export default function ShSelect({
                 }
                 renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {console.log(selected)}
                         {reset.multiple
                             ? selected?.map((value) => (
                                   <Chip

@@ -1,9 +1,8 @@
-import { DemoStoreState } from './type';
-import { createDemoStore } from './store';
-import { useContext, useRef } from 'react';
-import { StoreApi, useStore } from 'zustand';
-import { createContext } from 'react';
 import useMulti from '@Base/hooks/multiStateZustand';
+import { createContext, useContext, useRef } from 'react';
+import { StoreApi } from 'zustand';
+import { createDemoStore } from './store';
+import { DemoStoreState } from './type';
 
 const DemoStoreContext = createContext<StoreApi<DemoStoreState> | null>(null);
 DemoStoreContext.displayName = 'DemoStore';

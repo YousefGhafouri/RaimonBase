@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-
+import { useCallback, useState } from 'react'
 const useToggle = (inp?:boolean) => {
-  const State = useState(inp??false) as [boolean, ()=>void]
-  State[1] = State[1].bind(this,(prev)=>!prev)
-  return State
+  const State = useState(inp??false) 
+  const toggle = useCallback(() => State[1](prev => !prev), [State[1]])
+  State[1] = toggle
+  return State as [boolean, ()=>void]
 }
 
 export default useToggle

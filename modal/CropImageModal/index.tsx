@@ -162,7 +162,7 @@ const CropImageModal = ({
                                     step={1}
                                     aria-labelledby="Rotation"
                                     classes={{ root: styles.slider }}
-                                    onChange={(e, rotation) =>
+                                    onChange={(_e, rotation) =>
                                         setRotation(
                                             Array.isArray(rotation)
                                                 ? rotation?.[0]
