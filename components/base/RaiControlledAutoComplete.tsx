@@ -1,17 +1,16 @@
 'use client';
-import { CircularProgress, darken, lighten, styled } from '@mui/material';
+import { darken, lighten, styled } from '@mui/material';
 import { AutocompleteProps } from '@mui/material/Autocomplete';
-import Chip, { ChipTypeMap } from '@mui/material/Chip';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import { ChipTypeMap } from '@mui/material/Chip';
+import { TextFieldProps } from '@mui/material/TextField';
 import {
-    Control,
-    Controller,
-    FieldValues,
-    Path,
-    RegisterOptions,
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  RegisterOptions,
 } from 'react-hook-form';
-import RaiAutocomplete from "./RaiAutocomplete"
-import React from 'react';
+import RaiAutocomplete from "./RaiAutocomplete";
 
 
 const GroupHeader = styled('div')(({ theme }) => ({
@@ -90,7 +89,7 @@ export default function RaiControlledAutocomplete<
                     filterSelectedOptions
                     disabled={reset.disabled || fieldState.isValidating}
                     onChange={(_e, value, ...args) => {
-                        field.onChange(
+                      field.onChange(
                             typeof value === 'string'
                                 ? value
                                 : reset.multiple
