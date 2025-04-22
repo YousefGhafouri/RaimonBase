@@ -1,17 +1,16 @@
 'use client';
-import { CircularProgress, darken, lighten, styled } from '@mui/material';
+import { darken, lighten, styled } from '@mui/material';
 import { AutocompleteProps } from '@mui/material/Autocomplete';
-import Chip, { ChipTypeMap } from '@mui/material/Chip';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import { ChipTypeMap } from '@mui/material/Chip';
+import { TextFieldProps } from '@mui/material/TextField';
 import {
-    Control,
-    Controller,
-    FieldValues,
-    Path,
-    RegisterOptions,
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  RegisterOptions,
 } from 'react-hook-form';
-import RaiAutocomplete from "./RaiAutocomplete"
-import React from 'react';
+import RaiAutocomplete from "./RaiAutocomplete";
 
 
 const GroupHeader = styled('div')(({ theme }) => ({
@@ -83,50 +82,14 @@ export default function RaiControlledAutocomplete<
                     noOptionsText="موردی موجود  نیست"
                     loadingText="در حال بارگزاری..."
                     size={size}
+                    itemLabel={itemLabel}
+                    itemValue={itemValue}
                     {...reset}
-                    getOptionLabel={(option) => {
-                        console.log(field?.value,'value',option)
-                        if (
-                            reset.options.some((op) => typeof op !== 'string')
-                        ) {
-                            return (
-                                (option as NonNullable<T>)?.[
-                                    itemLabel as keyof T
-                                ]?.toString() ||
-                                reset.options
-                                    .find(
-                                        (item) =>
-                                            item[itemValue as keyof T] ===
-                                            option
-                                    )
-                                    ?.[itemLabel as keyof T]?.toString() ||
-                                '-'
-                            );
-                        }
-                        return (option as string) ?? '-';
-                    }}
-                    renderGroup={(params) => (
-                        <li key={params.key}>
-                            <GroupHeader>{params.group}</GroupHeader>
-                            <GroupItems>{params.children}</GroupItems>
-                        </li>
-                    )}
                     disableCloseOnSelect={reset.multiple}
-                    isOptionEqualToValue={(option, value) => {
-                        const optionVal =
-                            typeof option === 'string'
-                                ? value
-                                : itemValue
-                                  ? (option as T)?.[itemValue as keyof T]
-                                  : value;
-                        return reset.multiple
-                            ? field.value?.includes(optionVal)
-                            : optionVal === field.value;
-                    }}
                     filterSelectedOptions
                     disabled={reset.disabled || fieldState.isValidating}
                     onChange={(_e, value, ...args) => {
-                        field.onChange(
+                      field.onChange(
                             typeof value === 'string'
                                 ? value
                                 : reset.multiple
@@ -144,40 +107,6 @@ export default function RaiControlledAutocomplete<
                         );
                         onChange && onChange(_e, value, ...args);
                     }}
-                    renderTags={(tagValue, getTagProps) =>
-                        tagValue.map((option, index) => {
-                            const { key, ...tagProps } = getTagProps({
-                                index,
-                            });
-                            return (
-                                <Chip
-                                    size={size}
-                                    key={key}
-                                    label={
-                                        reset.options.some(
-                                            (op) => typeof op !== 'string'
-                                        )
-                                            ? (option as NonNullable<T>)?.[
-                                                  itemLabel as keyof T
-                                              ]?.toString() ||
-                                              reset.options
-                                                  .find(
-                                                      (item) =>
-                                                          item[
-                                                              itemValue as keyof T
-                                                          ] === option
-                                                  )
-                                                  ?.[
-                                                      itemLabel as keyof T
-                                                  ]?.toString() ||
-                                              '-'
-                                            : (option as string) || '-'
-                                    }
-                                    {...tagProps}
-                                />
-                            );
-                        })
-                    }
                 />
             )}
         />

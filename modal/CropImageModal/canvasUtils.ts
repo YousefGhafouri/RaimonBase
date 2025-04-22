@@ -15,7 +15,7 @@ export const createImage = (url: string):Promise<HTMLImageElement> =>
     image.src = url
   })
 
-function getRadianAngle(degreeValue) {
+function getRadianAngle(degreeValue: number) {
   return (degreeValue * Math.PI) / 180
 }
 
@@ -25,14 +25,12 @@ function getRadianAngle(degreeValue) {
  * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
  * @param {number} rotation - optional rotation parameter
  */
-export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0):Promise<{blob:Blob,b64?:string}> {
+export async function getCroppedImg(imageSrc: string, pixelCrop: { x: number; y: number; width: number; height: number } | null, rotation = 0):Promise<{blob:Blob,b64?:string}> {
   const image = await createImage(imageSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
 
-  if (!ctx) {
-    return null
-  }
+  if (ctx === null || pixelCrop === null) throw new Error("try again");
 
   const rotRad = getRadianAngle(rotation)
 
@@ -72,7 +70,7 @@ export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0):Promise<{
       // if () {
       //   resolve({blob: file, b64: canvas.toDataURL('image/jpeg')})
       // }
-      resolve({blob:file})
+      file && resolve({blob:file})
     }, 'image/png')
   })
 }
@@ -87,6 +85,7 @@ export async function getMaskedImg(imageSrc: string, maskSrc: string):Promise<{b
   const maskImage = await createImage(maskSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
+  if(ctx === null) throw new Error('try again')
   const biggestWidth = Math.max(image.width,maskImage.width)
   const biggestHeight = Math.max(image.height,maskImage.height)
   canvas.width = biggestWidth
@@ -107,15 +106,16 @@ export async function getMaskedImg(imageSrc: string, maskSrc: string):Promise<{b
       // if () {
       //   resolve({blob: file, b64: canvas.toDataURL('image/jpeg')})
       // }
-      resolve({blob:file})
+      file && resolve({blob:file})
     }, 'image/png')
   })
 }
 
-export async function getRotatedImage(imageSrc, rotation = 0):Promise<Blob | null> {
+export async function getRotatedImage(imageSrc:string, rotation = 0):Promise<Blob | null> {
   const image = await createImage(imageSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
+  if(ctx === null)return null
 
   const orientationChanged =
     rotation === 90 || rotation === -90 || rotation === 270 || rotation === -270

@@ -1,8 +1,8 @@
-import { tempBaseUrl } from "@api/constant/apiBase";
+// import { tempBaseUrl } from "@api/constant/apiBase";
 import { DemoStoreState } from "./type";
 import axios from "axios";
 import { createStore } from "zustand";
-
+const tempBaseUrl = ""
 export const createDemoStore = (initial?:Partial<DemoStoreState>)=>createStore<DemoStoreState>(()=>({
   ...initial,
   getDemo:async(inp)=>{
