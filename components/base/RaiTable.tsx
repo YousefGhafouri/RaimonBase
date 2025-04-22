@@ -83,7 +83,7 @@ export default function RaiTable<
                         .map((data, index) => ({ ...data, index: index + 1 }))
                         .map((row, index) => (
                             <TableRow
-                                key={`${row}`}
+                                key={index}
                                 sx={{
                                     '&:last-child td, &:last-child th': {
                                         border: 0,
