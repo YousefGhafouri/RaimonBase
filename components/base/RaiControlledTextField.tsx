@@ -41,8 +41,8 @@ export default function RaiControlledTextField<U extends FieldValues>({
     type?: 'money' | 'mobile' | 'text' | 'password' | 'number' | 'select' | 'email';
 } & Omit<TextFieldProps, 'value' | 'onChange' | 'defaultValue' | 'type'>) {
     const [visible, setVisible] = useState(false);
-    const options = items?.map(({ value, title }) => (
-      <MenuItem key={value} value={value}>
+    const options = items?.map(({ value, title },index) => (
+      <MenuItem key={index} value={value}>
           {title}
       </MenuItem>
   ));
@@ -74,7 +74,10 @@ export default function RaiControlledTextField<U extends FieldValues>({
                             SelectProps={{
                                 ...SelectProps,
                                 value: field.value,
-                                onChange: field.onChange,
+                                onChange: (...event)=>{
+                                  console.log('...event',...event)
+                                  field.onChange(...event)
+                                },
                                 renderValue:(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {SelectProps?.multiple
