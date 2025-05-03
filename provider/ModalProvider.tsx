@@ -12,7 +12,7 @@ interface IModal<T extends object> {
     reject?: (value: unknown) => void;
 }
 
-interface ModalStateI<T extends object> extends IModal<T> {
+export interface ModalStateI<T extends object> extends IModal<T> {
     id: number;
 }
 
