@@ -76,7 +76,7 @@ export default function RaiAutocomplete<T>({
                         '-'
                     );
                 }
-                return (option as string) ?? '-';
+                return (option?.toString()) ?? '-';
             }}
             renderGroup={(params) => (
                 <li key={params.key}>
