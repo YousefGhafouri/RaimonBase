@@ -22,7 +22,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type SlotDialogProps = Omit<DialogProps, 'children'> & {
+export type SlotDialogProps = Omit<DialogProps, 'children'|'slotProps'|'slots'> & {
   open: boolean;
   onClose: () => void;
   title?: React.ReactNode;
@@ -31,12 +31,14 @@ type SlotDialogProps = Omit<DialogProps, 'children'> & {
     Content?: React.ElementType;
     Footer?: React.ElementType;
     CloseButton?: React.ElementType;
+    root?: DialogProps['slots'];
   };
   slotProps?: {
     Header?: React.ComponentProps<any>;
     Content?: React.ComponentProps<any>;
     Footer?: React.ComponentProps<any>;
     CloseButton?: React.ComponentProps<any>;
+    root?: DialogProps['slotProps'];
   };
   actions?: React.ReactNode;
   children?: React.ReactNode;
@@ -65,8 +67,9 @@ const RaiDialoge: React.FC<SlotDialogProps> = ({
       onClose={onClose}
       fullWidth
       maxWidth="sm"
-      keepMounted
       {...dialogProps}
+      slots={slots.root}
+      slotProps={slotProps.root}
     >
       <Header
         sx={{
@@ -78,22 +81,22 @@ const RaiDialoge: React.FC<SlotDialogProps> = ({
           px: 2,
           py: 1,
         }}
-        {...slotProps.Header}
+        {...slotProps?.Header}
       >
         <Typography variant="h6">{title}</Typography>
         <CloseButton
           onClick={onClose}
           sx={{ color: theme.palette.primary.contrastText }}
-          {...slotProps.CloseButton}
+          {...slotProps?.CloseButton}
         >
           <CloseIcon />
         </CloseButton>
       </Header>
 
-      <Content {...slotProps.Content}>{children}</Content>
+      <Content dividers={!!actions} {...slotProps.Content}>{children}</Content>
 
       {actions && (
-        <Footer {...slotProps.Footer}>
+        <Footer sx={{flexDirection:'row-reverse',gap:2}}  {...slotProps?.Footer}>
           {actions}
         </Footer>
       )}

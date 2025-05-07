@@ -1,10 +1,11 @@
 'use client';
+import { WrapperComponent } from '@Base/provider/RaiDialogeWrapper';
 import React from 'react';
 import { create } from 'zustand';
 
 interface IModal<T extends object> {
     ContentComponent: React.FC<
-        Omit<T, 'closeModal'> & { closeModal: (inp: any) => void }
+        Omit<T, 'closeModal'> & { closeModal: (inp: any) => void, Wrapper:WrapperComponent }
     >;
     contentProps: T;
     id?: number | string;
