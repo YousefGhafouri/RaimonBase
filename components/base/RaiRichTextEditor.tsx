@@ -8,7 +8,7 @@ const RaiRichTextEditor = ({editor_ref,...props}:IAllProps&{editor_ref:any}) => 
 
   return (
     <Editor
-    tinymceScriptSrc={'/tinymce/tinymce.min.js'}
+    tinymceScriptSrc={'/img/tinymce/tinymce.min.js'}
     {...props}
 // @ts-ignore
     init={{

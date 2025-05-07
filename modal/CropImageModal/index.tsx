@@ -57,7 +57,7 @@ const CropImageModal = ({
     const [loading, toggleLoading] = useState(false);
 
     const showCroppedImage = async () => {
-        if (imageSrc) {
+        if (imageSrc && imgUrl) {
         } else return toast.error('image not loaded');
         try {
             toggleLoading(true);
@@ -142,7 +142,7 @@ const CropImageModal = ({
                                     onChange={(_e, zoom) =>
                                         setZoom(
                                             Array.isArray(zoom)
-                                                ? zoom?.[0]
+                                                ? zoom?.[0] as number
                                                 : zoom
                                         )
                                     }
@@ -165,7 +165,7 @@ const CropImageModal = ({
                                     onChange={(_e, rotation) =>
                                         setRotation(
                                             Array.isArray(rotation)
-                                                ? rotation?.[0]
+                                                ? rotation?.[0] as number
                                                 : rotation
                                         )
                                     }
