@@ -25,11 +25,13 @@ export default function RaiTable<
     items,
     loading = false,
     children,
+    pagination
 }: {
     header: Iheader<T>;
     items: T[];
     loading?: Boolean;
     children?: (data: T) => React.ReactNode;
+    pagination?: React.ReactNode;
 }) {
     return (
         <TableContainer component={Paper}>
@@ -106,6 +108,7 @@ export default function RaiTable<
                         ))}
                 </TableBody>
             </Table>
+            {pagination}
         </TableContainer>
     );
 }
