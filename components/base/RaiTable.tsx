@@ -36,7 +36,6 @@ export default function RaiTable<
     return (
         <TableContainer component={Paper}>
             <Table
-                sx={{ minWidth: 650 }}
                 size="small"
                 aria-label="simple table"
             >
