@@ -1,11 +1,11 @@
 import RaiDialoge, { SlotDialogProps } from '@Base/components/base/RaiDialoge';
 import React, { Children } from 'react';
-import useModal from '../../hooks/Modal';
+import {useModal} from '@Base/provider/ModalProvider';
 
 export type WrapperComponent = (props:{children:React.ReactNode} & Partial<SlotDialogProps>)=>React.ReactNode
 
 function RaiDialogeWrapper() {
-    const modals = useModal((state) => state.modals)
+    const modals = useModal((state) => state.modals);
     const closeModal = useModal((state) => state.closeModal);
 
     return (
@@ -17,6 +17,7 @@ function RaiDialogeWrapper() {
                     const onClose = closeModal(modalItem)
                     return (
                       <ContentComponent
+                            key={id}
                           {...contentProps}
                           closeModal={onClose}
                           Wrapper={(wrapperProps:{children:React.ReactNode} & Partial<SlotDialogProps>)=>(
