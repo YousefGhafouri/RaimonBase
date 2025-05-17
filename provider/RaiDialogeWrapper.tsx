@@ -5,10 +5,8 @@ import useModal from '../../hooks/Modal';
 export type WrapperComponent = (props:{children:React.ReactNode} & Partial<SlotDialogProps>)=>React.ReactNode
 
 function RaiDialogeWrapper() {
-    const { modals, closeModal } = useModal((state) => ({
-        modals: state.modals,
-        closeModal: state.closeModal,
-    }));
+    const modals = useModal((state) => state.modals)
+    const closeModal = useModal((state) => state.closeModal);
 
     return (
         <>
