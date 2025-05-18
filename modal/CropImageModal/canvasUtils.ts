@@ -140,3 +140,41 @@ export async function getRotatedImage(imageSrc:string, rotation = 0):Promise<Blo
     }, 'image/png')
   })
 }
+
+
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      resolve(base64);
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file); // Returns format like: data:image/png;base64,XXXX
+  });
+}
+
+
+/**
+ * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
+ * @param imageSrc
+ * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
+ * @param {number} rotation - optional rotation parameter
+ */
+export async function getImgString(imageSrc: string):Promise<string> {
+  const image = await createImage(imageSrc)
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  if (ctx === null ) throw new Error("try again");
+
+  canvas.width = image.width
+  canvas.height = image.height
+
+  ctx.drawImage(image,0,0)
+  // As Base64 string
+  return canvas.toDataURL();
+}
