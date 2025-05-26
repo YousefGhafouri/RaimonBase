@@ -17,6 +17,20 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 
+export interface RaiControlledTextFieldProps <U extends FieldValues> extends Omit<TextFieldProps, 'value' | 'onChange' | 'defaultValue' | 'type'>{
+  items?: { value: any; title?: string | null }[];
+  label: string;
+  control: Control<U, any>;
+  registerName: Path<U>;
+  rules?:
+      | Omit<
+            RegisterOptions<U, Path<U>>,
+            'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+        >
+      | undefined;
+  type?: 'money' | 'mobile' | 'text' | 'password' | 'number' | 'select' | 'email';
+}
+
 export default function RaiControlledTextField<U extends FieldValues>({
     items,
     label,
@@ -27,19 +41,7 @@ export default function RaiControlledTextField<U extends FieldValues>({
     SelectProps,
     rules,
     ...rest
-}: {
-    items?: { value: any; title?: string | null }[];
-    label: string;
-    control: Control<U, any>;
-    registerName: Path<U>;
-    rules?:
-        | Omit<
-              RegisterOptions<U, Path<U>>,
-              'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
-          >
-        | undefined;
-    type?: 'money' | 'mobile' | 'text' | 'password' | 'number' | 'select' | 'email';
-} & Omit<TextFieldProps, 'value' | 'onChange' | 'defaultValue' | 'type'>) {
+}: RaiControlledTextFieldProps<U>) {
     const [visible, setVisible] = useState(false);
     const options = items?.map(({ value, title },index) => (
       <MenuItem key={index} value={value}>
