@@ -36,7 +36,6 @@ export default function RaiTable<
     return (
         <TableContainer component={Paper}>
             <Table
-                sx={{ minWidth: 650 }}
                 size="small"
                 aria-label="simple table"
             >
@@ -54,6 +53,7 @@ export default function RaiTable<
                 </TableHead>
                 <TableBody>
                     {loading && (
+                      <TableRow>
                         <TableCell colSpan={12}>
                             <Box
                                 sx={{
@@ -65,8 +65,10 @@ export default function RaiTable<
                                 <CircularProgress />
                             </Box>
                         </TableCell>
+                      </TableRow>
                     )}
                     {!loading && items.length === 0 && (
+                      <TableRow>
                         <TableCell colSpan={12}>
                             <Box
                                 sx={{
@@ -80,6 +82,7 @@ export default function RaiTable<
                                 </Typography>
                             </Box>
                         </TableCell>
+                      </TableRow>
                     )}
                     {items
                         .map((data, index) => ({ ...data, index: index + 1 }))
