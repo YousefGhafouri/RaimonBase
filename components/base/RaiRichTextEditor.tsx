@@ -12,6 +12,7 @@ const RaiRichTextEditor = ({editor_ref,...props}:IAllProps&{editor_ref:any}) => 
     {...props}
 // @ts-ignore
     init={{
+      promotion: false,
       ...EditorProps,
       // tinymceScriptSrc:process.env.PUBLIC_URL + "/tinymce/tinymce.min.js",
       images_upload_handler: createUploadHandler(),
