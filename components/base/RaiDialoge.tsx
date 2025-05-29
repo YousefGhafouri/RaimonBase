@@ -96,7 +96,7 @@ const RaiDialoge: React.FC<SlotDialogProps> = ({
       <Content dividers={!!actions} {...slotProps.Content}>{children}</Content>
 
       {actions && (
-        <Footer sx={{flexDirection:'row-reverse',gap:2}}  {...slotProps?.Footer}>
+        <Footer sx={{gap:2}}  {...slotProps?.Footer}>
           {actions}
         </Footer>
       )}

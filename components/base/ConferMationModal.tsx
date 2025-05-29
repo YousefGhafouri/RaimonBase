@@ -50,7 +50,7 @@ function ConfirMation({
                     }}
                 ></Box>
             </DialogContent>
-            <DialogActions sx={{direction:'rtl',gap:1}} >
+            <DialogActions sx={{flexDirection:'row-reverse',gap:1}} >
                 <Button
                     variant="contained"
                     color="success"
