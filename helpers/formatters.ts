@@ -7,7 +7,7 @@ export function $dateFormatter(
     return date ? moment(date).format(format ? format : 'jYYYY-jM-jD') : '-';
 }
 
-export const intlFormat = new Intl.NumberFormat('irr', {
+export const intlFormat = new Intl.NumberFormat('en', {
     maximumSignificantDigits: 3,
 })
 
