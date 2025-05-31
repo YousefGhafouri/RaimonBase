@@ -19,7 +19,7 @@ function RenderError({ msg }: { msg: string }) {
 }
 
 export function $serverError(msg: string, userOptions?: ToastOptions) {
-    toast.error(<RenderError msg={msg} />, { ...options, ...userOptions });
+    toast.info(<RenderError msg={msg} />, { ...options, ...userOptions });
 }
 export function $error(msg: string, userOptions?: ToastOptions) {
     toast.error(msg, { ...options, ...userOptions });

@@ -1,117 +1,317 @@
-import * as React from 'react';
+import ConditionalComponent from '@Base/components/base/ConditionalComponent';
+import ConditionalRender from '@Base/components/base/ConditionalRendering';
+import Observer from '@Base/components/base/Pagination/Observer';
+import Pagination, { IPaginationProps } from '@Base/components/base/Pagination/Pagination';
+import { basicNullHandler } from '@Base/helpers/table';
+import {
+  Box, Card,
+  CardHeader, CircularProgress, Divider,
+  Grid2 as Grid, TableFooter, Typography, useMediaQuery
+} from '@mui/material';
+import { green } from '@mui/material/colors';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Box, CircularProgress, Typography } from '@mui/material';
-import { basicNullHandler } from '@Base/helpers/table';
+import * as React from 'react';
 
 interface IheaderItem<T extends object>{
     label: string;
     key: keyof T | (string & {});
     width?: number;
-    cellRenderer?: (data: T, index?: number) => React.ReactNode;
+    cellRenderer?: (data: {row: T, index: number, id: string, field: keyof T, formattedValue: T | string}) => React.ReactNode;
+    headCellProp?: TableCellProps;
+    bodyCellProp?: TableCellProps;
 }
 
 export type Iheader<T extends object> = Array<IheaderItem<T>>
 
 export default function RaiTable<
-    T extends Record<string | number | symbol, unknown>,
+    T extends object,
 >({
     header,
     items,
     loading = false,
     children,
+    height,
     pagination
 }: {
     header: Iheader<T>;
     items: T[];
     loading?: Boolean;
+    height?: number;
     children?: (data: T) => React.ReactNode;
-    pagination?: React.ReactNode;
+    pagination?: IPaginationProps;
 }) {
+  const isMobile = useMediaQuery("(max-width: 767px)");
+    const headerWithRowIndex: Array<IheaderItem<T>> = [
+      ...(!header.some((item) => item.key === 'index')
+          ? [{ label: 'ردیف', key: 'index', width: 45 }]
+          : []),
+      ...header,
+  ];
+  const columnsLength = headerWithRowIndex.length
     return (
-        <TableContainer component={Paper}>
-            <Table
-                size="small"
-                aria-label="simple table"
-            >
-                <TableHead>
-                    <TableRow>
-                        {[
-                            { label: 'ردیف', key: 'index', width: 45 },
-                            ...header,
-                        ].map(({ label, width }) => (
-                            <TableCell width={width} key={label}>
-                                {label}
-                            </TableCell>
-                        ))}
-                    </TableRow>
+      <Box component={isMobile ? "div" : Paper}>
+        <TableContainer
+          sx={{ position: "relative", height, overflow: "unset" }}
+        >
+          <Table size="small" aria-label="simple table" sx={{tableLayout: "fixed"}}>
+            <ConditionalRender
+              condition={!isMobile}
+              render={
+                <TableHead
+                  sx={{
+                    position: "sticky",
+                    top: "var(--sticky-top-offset,0)",
+                    overflowX: "auto",
+                    zIndex: 1,
+                  }}
+                >
+                  <TableRow>
+                    {headerWithRowIndex.map(
+                      ({ label, width, headCellProp = {} }) => (
+                        <TableCell
+                          width={width}
+                          key={label}
+                          {...headCellProp}
+                          sx={[
+                            (theme) => ({
+                              backgroundColor: theme.palette.primary.main,
+                              color: "white",
+                              ...headCellProp?.sx,
+                            }),
+                            ...(Array.isArray(headCellProp.sx)
+                              ? headCellProp.sx
+                              : [headCellProp.sx]),
+                          ]}
+                        >
+                          {label}
+                        </TableCell>
+                      )
+                    )}
+                  </TableRow>
                 </TableHead>
+              }
+            />
+
+            <ConditionalRender
+              condition={!isMobile}
+              render={
                 <TableBody>
-                    {loading && (
-                      <TableRow>
-                        <TableCell colSpan={12}>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    padding: '10px',
-                                }}
-                            >
-                                <CircularProgress />
-                            </Box>
-                        </TableCell>
+                  {loading && (
+                    <TableRow>
+                      <TableCell colSpan={columnsLength}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "10px",
+                          }}
+                        >
+                          <CircularProgress />
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {!loading && items?.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={columnsLength}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "10px",
+                          }}
+                        >
+                          <Typography fontWeight={500}>
+                            داده ای برای نمایش موجود نیست
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {items
+                    ?.map((data, index) => ({
+                      ...data,
+                      index: index + 1,
+                    }))
+                    ?.map((row, index) => (
+                      <TableRow
+                        key={`${row}`}
+                        sx={{
+                          "&:last-child td, &:last-child th": {
+                            border: 0,
+                          },
+                        }}
+                      >
+                        {headerWithRowIndex?.map(
+                          ({
+                            key,
+                            cellRenderer: CellRenderer,
+                            bodyCellProp,
+                          }) => (
+                            <TableCell key={key.toString()} {...bodyCellProp}>
+                              {CellRenderer ? (
+                                <CellRenderer
+                                  row={row}
+                                  index={index}
+                                  id={key.toString()}
+                                  field={key as keyof T}
+                                  formattedValue={
+                                    basicNullHandler(row[key as keyof T]) as string
+                                  }
+                                />
+                              ) : children ? (
+                                children(row)
+                              ) : (
+                                `${basicNullHandler(row[key as keyof T])}`
+                              )}
+                            </TableCell>
+                          )
+                        )}
                       </TableRow>
-                    )}
-                    {!loading && items.length === 0 && (
-                      <TableRow>
-                        <TableCell colSpan={12}>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    padding: '10px',
-                                }}
-                            >
-                                <Typography fontWeight={500}>
-                                    داده ای برای نمایش موجود نیست
-                                </Typography>
-                            </Box>
-                        </TableCell>
-                      </TableRow>
-                    )}
-                    {items
-                        .map((data, index) => ({ ...data, index: index + 1 }))
-                        .map((row, index) => (
-                            <TableRow
-                                key={index}
-                                sx={{
-                                    '&:last-child td, &:last-child th': {
-                                        border: 0,
-                                    },
-                                }}
-                            >
-                                {[
-                                    { label: 'ردیف', key: 'index' },
-                                    ...header,
-                                ].map(({ key, cellRenderer }) => (
-                                    <TableCell key={key.toString()}>
-                                        {cellRenderer
-                                            ? cellRenderer(row, index)
-                                            : children
-                                              ? children(row)
-                                              : `${basicNullHandler(row[key])}`}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))}
+                    ))}
+                    <ConditionalComponent
+                      condition={!!pagination}
+                      renderProps={pagination}
+                      render={(props)=>
+                        <TableRow>
+                          <TableCell colSpan={columnsLength}>
+                            <Observer {...props} />
+                          </TableCell>
+                        </TableRow>
+                      }
+                    />
                 </TableBody>
-            </Table>
-            {pagination}
+              }
+            >
+              {items
+                ?.map((data, index) => ({
+                  ...data,
+                  index: index + 1,
+                }))
+                ?.map((row, index) => (
+                  <Card
+                    key={`${row}`}
+                    sx={{
+                      marginBlock: 2,
+                      marginInline: 1,
+                    }}
+                  >
+                    <CardHeader title={`ردیف ${index + 1}`} />
+                    {loading && (
+                      <TableCell colSpan={columnsLength}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "10px",
+                          }}
+                        >
+                          <CircularProgress />
+                        </Box>
+                      </TableCell>
+                    )}
+                    {!loading && items?.length === 0 && (
+                      <TableCell colSpan={columnsLength}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "10px",
+                          }}
+                        >
+                          <Typography fontWeight={500}>
+                            داده ای برای نمایش موجود نیست
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                    )}
+                    {headerWithRowIndex.map(
+                      ({ key, cellRenderer: CellRenderer, label }) => {
+                        if (key === "index") return null;
+                        return (
+                          <Grid
+                            container
+                            spacing={1}
+                            marginBlock={1}
+                            key={key.toString()}
+                            gap={0.5}
+                            flexShrink={1}
+                            marginInline={0.2}
+                          >
+                            <Grid
+                              style={{
+                                border: `1px solid ${green[100]}`,
+                                borderRadius: 5,
+                              }}
+                              padding={2}
+                              size={{ xs: 5.7 }}
+                              minWidth={0}
+                              flexShrink={1}
+                            >
+                              {label}
+                            </Grid>
+                            <Grid
+                              flexShrink={1}
+                              size={{ xs: 5.8 }}
+                              minWidth={0}
+                              padding={2}
+                              style={{
+                                backgroundColor: green[50],
+                                borderRadius: 5,
+                              }}
+                            >
+                              {CellRenderer ? (
+                                <CellRenderer
+                                  row={row}
+                                  index={index}
+                                  id={key.toString()}
+                                  field={key as keyof T}
+                                  formattedValue={
+                                    basicNullHandler(row[key as keyof T]) as string
+                                  }
+                                />
+                              ) : children ? (
+                                children(row)
+                              ) : (
+                                `${basicNullHandler(row[key as keyof T])}`
+                              )}
+                            </Grid>
+                          </Grid>
+                        );
+                      }
+                    )}
+                  </Card>
+                ))}
+                <ConditionalComponent
+                  condition={!!pagination}
+                  primaryProps={pagination}
+                  primary={Observer}
+                />
+            </ConditionalRender>
+          </Table>
         </TableContainer>
+        <TableFooter
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            background: "white",
+            padding: 1,
+          }}
+        >
+          <Divider />
+          <ConditionalComponent
+            condition={!!pagination}
+            renderProps={pagination}
+            render={Pagination}
+          />
+        </TableFooter>
+      </Box>
     );
 }
