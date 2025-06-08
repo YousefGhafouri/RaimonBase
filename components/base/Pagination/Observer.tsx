@@ -21,7 +21,7 @@ const Observer = (props: Props) => {
         onIntersect,
         disablePaginationOnScroll = false,
         isOnlyScrollPagination = false,
-        interSectionObserverOptions,
+        interSectionObserverOptions = {rootMargin: '300px 0px 0px 0px',},
     } = props;
     const observer = React.useRef<IntersectionObserver>();
     const lastElementRef = React.useCallback(
