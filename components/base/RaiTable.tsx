@@ -37,7 +37,11 @@ export default function RaiTable<
     loading = false,
     children,
     height,
-    pagination
+    pagination,
+    slotProps:{
+      TableBodyProps={},
+      TableProps={}
+    }={}
 }: {
     header: Iheader<T>;
     items: T[];
@@ -45,6 +49,10 @@ export default function RaiTable<
     height?: number;
     children?: (data: T) => React.ReactNode;
     pagination?: IPaginationProps;
+    slotProps?:{
+      TableBodyProps?:any
+      TableProps?:any
+    }
 }) {
   const isMobile = useMediaQuery("(max-width: 767px)");
     const headerWithRowIndex: Array<IheaderItem<T>> = [
@@ -59,7 +67,9 @@ export default function RaiTable<
         <TableContainer
           sx={{ position: "relative", height, overflow: "unset" }}
         >
-          <Table size="small" aria-label="simple table" sx={{tableLayout: "fixed"}}>
+          <Table size="small" aria-label="simple table" {...TableProps} sx={[{tableLayout: "fixed"},
+            ...Array.isArray(TableProps.sx)?TableProps.sx:[TableProps.sx]
+          ]}>
             <ConditionalRender
               condition={!isMobile}
               render={
@@ -101,7 +111,7 @@ export default function RaiTable<
             <ConditionalRender
               condition={!isMobile}
               render={
-                <TableBody>
+                <TableBody {...TableBodyProps} >
                   {loading && (
                     <TableRow>
                       <TableCell colSpan={columnsLength}>
