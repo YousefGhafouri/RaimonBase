@@ -28,6 +28,39 @@ const GroupItems = styled('ul')({
     padding: 0,
 });
 
+export interface RaiControlledAutocompleteProps<
+    T extends unknown,
+    U extends FieldValues,
+> extends Omit<
+    AutocompleteProps<
+        T,
+        boolean | undefined,
+        boolean | undefined,
+        boolean | undefined,
+        ChipTypeMap['defaultComponent']
+    >,
+    'renderInput' | "slotProps"> {
+  loading?: boolean;
+  label: string;
+  control: Control<U, any>;
+  registerName: Path<U>;
+  rules?:
+    | Omit<
+        RegisterOptions<U, Path<U>>,
+        "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"
+      >
+    | undefined;
+  itemValue?: keyof T | "value";
+  itemLabel?: keyof T | "label";
+  slotProps?: AutocompleteProps<
+    T,
+    boolean | undefined,
+    boolean | undefined,
+    boolean | undefined,
+    ChipTypeMap["defaultComponent"]
+  >["slotProps"] & { textField?: TextFieldProps };
+}
+
 export default function RaiControlledAutocomplete<
     T extends unknown,
     U extends FieldValues,
@@ -40,35 +73,7 @@ export default function RaiControlledAutocomplete<
     rules,
     onChange,
     ...reset
-}: {
-    loading?: boolean;
-    label: string;
-    control: Control<U, any>;
-    registerName: Path<U>;
-    rules?:
-        | Omit<
-              RegisterOptions<U, Path<U>>,
-              'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
-          >
-        | undefined;
-    itemValue?: keyof T | 'value';
-    itemLabel?: keyof T | 'label';
-    slotProps?:AutocompleteProps<
-        T,
-        boolean | undefined,
-        boolean | undefined,
-        boolean | undefined,
-        ChipTypeMap['defaultComponent']>['slotProps'] & {textField?:TextFieldProps};
-} & Omit<
-    AutocompleteProps<
-        T,
-        boolean | undefined,
-        boolean | undefined,
-        boolean | undefined,
-        ChipTypeMap['defaultComponent']
-    >,
-    'renderInput' | "slotProps"
->) {
+}:RaiControlledAutocompleteProps<T,U>) {
     return (
         <Controller
             control={control}
