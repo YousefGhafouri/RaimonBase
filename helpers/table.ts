@@ -1,1 +1,1 @@
-export const basicNullHandler = (data: unknown) => data || '-';
+export const basicNullHandler = <T extends unknown>(data: T) => data || '-';

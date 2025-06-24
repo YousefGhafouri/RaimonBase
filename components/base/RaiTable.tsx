@@ -29,6 +29,21 @@ interface IheaderItem<T extends object>{
 
 export type Iheader<T extends object> = Array<IheaderItem<T>>
 
+export interface RaiTableProps<
+    T extends object,
+> {
+    header: Iheader<T>;
+    items: T[];
+    loading?: Boolean;
+    height?: number;
+    children?: (data: T) => React.ReactNode;
+    pagination?: IPaginationProps;
+    slotProps?:{
+      TableBodyProps?:any
+      TableProps?:any
+    }
+}
+
 export default function RaiTable<
     T extends object,
 >({
@@ -42,18 +57,7 @@ export default function RaiTable<
       TableBodyProps={},
       TableProps={}
     }={}
-}: {
-    header: Iheader<T>;
-    items: T[];
-    loading?: Boolean;
-    height?: number;
-    children?: (data: T) => React.ReactNode;
-    pagination?: IPaginationProps;
-    slotProps?:{
-      TableBodyProps?:any
-      TableProps?:any
-    }
-}) {
+}: RaiTableProps<T>) {
   const isMobile = useMediaQuery("(max-width: 767px)");
     const headerWithRowIndex: Array<IheaderItem<T>> = [
       ...(!header.some((item) => item.key === 'index')
