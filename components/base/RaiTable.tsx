@@ -18,7 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
 
-interface IheaderItem<T extends object>{
+export interface IheaderItem<T extends object>{
     label: string;
     key: keyof T | (string & {});
     width?: number;
