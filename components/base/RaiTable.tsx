@@ -6,7 +6,7 @@ import { basicNullHandler } from '@Base/helpers/table';
 import {
   Box, Card,
   CardHeader, CircularProgress, Divider,
-  Grid2 as Grid, TableFooter, Typography, useMediaQuery
+  Grid, TableFooter, Typography, useMediaQuery
 } from '@mui/material';
 import { green } from '@mui/material/colors';
 import Paper from '@mui/material/Paper';
@@ -264,7 +264,7 @@ export default function RaiTable<
                                 borderRadius: 5,
                               }}
                               padding={2}
-                              size={{ xs: 5.7 }}
+                              xs={5.7}
                               minWidth={0}
                               flexShrink={1}
                             >
@@ -272,7 +272,7 @@ export default function RaiTable<
                             </Grid>
                             <Grid
                               flexShrink={1}
-                              size={{ xs: 5.8 }}
+                              xs={5.8}
                               minWidth={0}
                               padding={2}
                               style={{
